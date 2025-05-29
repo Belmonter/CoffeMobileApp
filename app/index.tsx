@@ -1,5 +1,6 @@
 import Button from "@/components/Button/Button";
 import { Colors, Fonts } from "@/constants/tokens";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native'
 import * as SplashScreen from 'expo-splash-screen'
@@ -24,17 +25,23 @@ const App = () => {
     <View style={styles.container} onLayout={onLayoutRootView}>
       <ImageBackground
         source={require('../assets/images/coffee-background.jpg')}
-        resizeMode="cover"
-        style={StyleSheet.absoluteFillObject}
-      />
+        resizeMode='contain'
+        style={styles.imageBackground}
+      >
+        <View style={styles.contentWrapper}>
+          <LinearGradient style={styles.content} colors={['rgba(0,0,0,0)', '#000']} start={{x: 0, y: 0}}
+                          end={{x: 0, y: 1}}
+                          locations={[0, 0.2673]}>
+            <Text style={styles.title}>Одно из самых вкусных кофе в городе!</Text>
+            <Text style={styles.subtitle}>
+              Свежие зёрна, настоящая арабика и бережная обжарка
+            </Text>
+            <Button style={styles.button} text="Начать"/>
+          </LinearGradient>
+        </View>
 
-      <View style={styles.content}>
-        <Text style={styles.title}>Одно из самых вкусных кофе в городе!</Text>
-        <Text style={styles.subtitle}>
-          Свежие зёрна, настоящая арабика и бережная обжарка
-        </Text>
-        <Button style={styles.button} text="Начать"/>
-      </View>
+
+      </ImageBackground>
     </View>
   );
 };
@@ -42,14 +49,19 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative', // по умолчанию, но наглядно показываем
-    justifyContent: 'space-between',
+  },
+  imageBackground: {
+    ...StyleSheet.absoluteFillObject,
+    top: '-25%'
+  },
+  contentWrapper: {
+    justifyContent: 'flex-end',
+    flex: 1
   },
   content: {
-    flex: 1,
     padding: 30,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: Fonts.f34,
